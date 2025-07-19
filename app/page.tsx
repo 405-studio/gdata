@@ -1,7 +1,8 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { TrendingRepo } from './api/trending/route';
+import { AnalysisData } from './types/analysis';
 import { TrendingHeader } from './components/TrendingHeader';
 import { TrendingFilters } from './components/TrendingFilters';
 import { TrendingList } from './components/TrendingList';
@@ -12,10 +13,10 @@ export default function Home() {
   const [loading, setLoading] = useState(false);
   const [since, setSince] = useState('weekly');
   const [language, setLanguage] = useState('');
-  const [analysis, setAnalysis] = useState<any>(null);
+  const [analysis, setAnalysis] = useState<AnalysisData | null>(null);
   const [analyzing, setAnalyzing] = useState(false);
 
-  const fetchTrending = async () => {
+  const fetchTrending = useCallback(async () => {
     setLoading(true);
     try {
       const params = new URLSearchParams();
@@ -35,7 +36,7 @@ export default function Home() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [since, language]);
 
   const analyzeData = async () => {
     if (repos.length === 0) return;

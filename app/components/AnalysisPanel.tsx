@@ -1,7 +1,8 @@
 import { BarChart3, Loader2, TrendingUp, Code2, Zap } from 'lucide-react';
+import { AnalysisData } from '../types/analysis';
 
 interface AnalysisPanelProps {
-  analysis: any;
+  analysis: AnalysisData | null;
   analyzing: boolean;
 }
 
